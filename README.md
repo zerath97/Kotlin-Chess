@@ -1,6 +1,6 @@
 # Chess made in Kotlin
 Learning to build Graddle projects with Kotlin. The goal is to create a system that is easily maintanable, readable and efficient.
-It should not just get the game working, but apply other functionalities and features such as networking for online or LAN play, ranking system, authentication system and thereunedr friend list.
+It should not just get the game working, but apply other functionalities and features such as networking for online or LAN play, ranking system, authentication system and there under friend list.
 
 - This is my first project made in Kotlin.
 It is created to learn to the principles of progrmaming in Kotlin, using the Object Oritiented Programming approach.
