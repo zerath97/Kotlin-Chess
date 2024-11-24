@@ -9,7 +9,11 @@ fun main() {
 
 	val board1 : Board = Board()
 	board1.setupPieces()
-	val board2 : Board = Board()
-	board2.setupPieces()
+
+	val pieces = board1.pieces
+	for ((key, piece) in pieces) {
+		println(key)
+	}
+
 
 }

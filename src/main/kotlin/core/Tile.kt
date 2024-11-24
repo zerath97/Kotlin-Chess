@@ -2,7 +2,7 @@ package core
 
 import core.Color
 
-class Tile (val row: UInt = 0u, val col: UInt = 0u) {
+class Tile (val row: Int = 0, val col: Int = 0) {
 
 	val color: Color = if((row + col).toInt() % 2 == 0) Color.BLACK else Color.WHITE
 	var occupied : Boolean = false

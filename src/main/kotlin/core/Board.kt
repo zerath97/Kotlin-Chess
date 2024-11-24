@@ -5,23 +5,6 @@ import core.Tile
 import pieces.*
 
 class Board {
-	val tiles: List<Tile> = List(64) { index ->
-		val row : UInt = (1 + (index / 8)).toUInt()
-		val col : UInt = (1 + (index % 8)).toUInt()
-		Tile(row, col)
-	}
-
-	val pieces = MutableList<Piece?>(32) { index ->
-
-		when(index) {
-			28 -> King(Color.WHITE)
-			4 -> King(Color.BLACK)
-			in 16..23 -> Pawn(Color.WHITE)
-			in 8..15 -> Pawn(Color.BLACK)
-
-			else -> null
-		}
-	}
 
 	var id : Int = 0
 
@@ -35,11 +18,59 @@ class Board {
 		id = counter
 	}
 
-	fun getTile(row: UInt, col: UInt) : Tile {
-		val index = ((row - 1u) * 8u + (col - 1u)).toInt()
-		return tiles[index]
+	val tiles: List<Tile> = List(64) { index ->
+		val row : Int = (1 + (index / 8))
+		val col : Int = (1 + (index % 8))
+		Tile(row, col)
 	}
 
+	val pieces = mutableMapOf<String, Piece?>().apply {
+		for (index in 0 .. 31) {
+			val piece = when (index) {
+				0, 7 -> Rook(Color.BLACK)
+				1, 6 -> Knight(Color.BLACK)
+				2, 5 -> Bishop(Color.BLACK)
+				3 -> Queen(Color.BLACK)
+				4 -> King(Color.BLACK)
+				in 8..15 -> Pawn(Color.BLACK)
+
+				in 16..23 -> Pawn(Color.WHITE)
+				28 -> King(Color.WHITE)
+				27 -> Queen(Color.WHITE)
+				24, 31 -> Rook(Color.WHITE)
+				25, 30 -> Knight(Color.WHITE)
+				26, 29 -> Bishop(Color.WHITE)
+
+				else -> null
+			}
+
+			piece?.let {
+				val key = "${it.color} ${it.type} ${it.id}"
+				put(key, it)
+			}
+		}
+	}
+
+//	val pieces = MutableList<Piece?>(32) { index ->
+//
+//		when(index) {
+//			0, 7 -> Rook(Color.BLACK)
+//			1, 6 -> Knight(Color.BLACK)
+//			2, 5 -> Bishop(Color.BLACK)
+//			3 -> Queen(Color.BLACK)
+//			4 -> King(Color.BLACK)
+//			in 8..15 -> Pawn(Color.BLACK)
+//
+//			in 16..23 -> Pawn(Color.WHITE)
+//			28 -> King(Color.WHITE)
+//			29 -> Queen(Color.WHITE)
+//			24, 31 -> Rook(Color.WHITE)
+//			25, 30 -> Knight(Color.WHITE)
+//			26, 27 -> Bishop(Color.WHITE)
+//
+//			else -> null
+//		}
+//	}
 
 	fun setupPieces() {
 		println("New setup of the board is starting...")
@@ -53,13 +84,20 @@ class Board {
 		println()
 		this.print()
 		println("Putting pieces into their starting positions...")
-		for(i in 0..< pieces.size) {
-
-			 pieces[i]?.tile = if (i < pieces.size/2) tiles[i] else tiles[i+32]
+		var count : Int = 0
+		for((_, piece) in pieces) {
+			piece?.tile = if (count < pieces.size/2) tiles[count] else tiles[count+32]
+			count++
 		}
 
 		this.print()
 	}
+
+	fun getTile(row: Int, col: Int) : Tile {
+		val index = ((row - 1) * 8 + (col - 1)).toInt()
+		return tiles[index]
+	}
+
 
 	fun print(): Unit {
 		println("/||\\ Current state of Board $id /||\\")
@@ -72,9 +110,11 @@ class Board {
 
 	fun printPieces(): Unit {
 		println("/||\\ All pieces existing in Board $id /||\\")
-		for ((i, piece) in pieces.withIndex()) {
-			if (i % 8 == 0 && i  > 0) println("")
-			print("- $piece id: ${pieces.indexOf(piece)} ")
+		var count : Int = 0
+		for ((key, piece) in pieces) {
+			if (count % 8 == 0 && count  > 0) println("")
+			print("- $piece id: ${pieces[key]} ")
+			count++
 		}
 		println()
 	}

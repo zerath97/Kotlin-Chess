@@ -1,20 +1,21 @@
-//package pieces
-//
-//import core.PieceType
-//import core.Color
-//import core.Piece
-//import core.Tile
-//
-//
-//class Knight(val color : Color) : Piece(PieceType.KING, color){
-//
-//
-//	override fun possibleMoves(): List<Tile> {
-//		var tiles = mutableListOf<Tile>(10)
-//		tiles[0].row
-//
-//	}
-//	override fun move() {
-//		TODO("Not yet implemented")
-//	}
-//}
+package pieces
+
+import core.PieceType
+import core.Color
+import core.Piece
+import core.Tile
+
+
+class Knight(color : Color) : Piece(PieceType.KNIGHT, color){
+	override val id: Int = assignId(2)
+
+	override val offsetMoves: List<Tile> = listOf(
+		Tile(1, 1), Tile(1, 0), Tile(1, -1), // Example moves
+		Tile(0, 1),            Tile(0, -1),
+		Tile(-1, 1), Tile(-1, 0), Tile(-1, -1)
+	)
+
+	override fun move(newTile: Tile) {
+		TODO("Not yet implemented")
+	}
+}
