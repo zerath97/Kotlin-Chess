@@ -32,4 +32,8 @@ class Pawn(color : Color) : Piece(PieceType.PAWN, color){
 		return regularMoves /*, attackMoves*/
 	}
 
+	override fun move(newTile: Tile) {
+		TODO("Not yet implemented")
+	}
+
 }
