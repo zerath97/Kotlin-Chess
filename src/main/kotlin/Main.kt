@@ -12,9 +12,4 @@ fun main() {
 	val board2 : Board = Board()
 	board2.setupPieces()
 
-
-
-
-
-
 }
